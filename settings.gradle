@@ -1,0 +1,3 @@
+rootProject.name = 'library-system'
+
+include 'book-service'
