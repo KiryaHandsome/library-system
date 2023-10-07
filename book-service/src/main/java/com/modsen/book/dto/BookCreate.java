@@ -1,11 +1,11 @@
 package com.modsen.book.dto;
 
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 public record BookCreate(
-        @NotBlank
+        @NotNull
         @Pattern(regexp = "^(?=(?:\\D*\\d){10}(?:(?:\\D*\\d){3})?$)[\\d-]+$")
         String ISBN,
 
@@ -15,7 +15,7 @@ public record BookCreate(
         @Size(min = 2, max = 100)
         String genre,
 
-        @Size(min = 2, max = 100)
+        @Size(min = 2, max = 255)
         String description,
 
         @Size(min = 2, max = 100)
