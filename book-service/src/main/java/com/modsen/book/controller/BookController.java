@@ -42,9 +42,11 @@ public class BookController implements BookControllerOpenApi {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteBookById(@PathVariable Integer id) {
+    public ResponseEntity<Void> deleteBookById(@PathVariable Integer id) {
         bookService.deleteById(id);
-        return ResponseEntity.ok("Book has deleted or isn't present in db.");
+        return ResponseEntity
+                .noContent()
+                .build();
     }
 
     @PostMapping
