@@ -14,7 +14,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 public interface BookControllerOpenApi {
 
@@ -132,6 +132,45 @@ public interface BookControllerOpenApi {
     )
     ResponseEntity<Page<BookResponse>> getBooks(Pageable pageable);
 
+
+    @Operation(
+            method = "GET",
+            tags = "Book",
+            description = "Get book by ISBN",
+            parameters = @Parameter(name="isbn", description = "ISBN identification", example = "9780451524935"),
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = BookResponse.class),
+                                    examples = @ExampleObject("""
+                                            {
+                                                "id": 1,
+                                                "ISBN": "9780451524935",
+                                                "name": "1984",
+                                                "genre": "Fiction",
+                                                "description": "A dystopian novel by George Orwell",
+                                                "author": "George Orwell"
+                                            }
+                                            """)
+                            )
+                    ),
+                    @ApiResponse(
+                            responseCode = "404",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = ErrorEntity.class),
+                                    examples = @ExampleObject("""
+                                            {
+                                                "message": "Book not found. ISBN = 10"
+                                            }
+                                            """)
+                            )
+                    )
+            }
+    )
+    ResponseEntity<BookResponse> getBookByISBN(@RequestParam String ISBN);
 
     @Operation(
             method = "DELETE",

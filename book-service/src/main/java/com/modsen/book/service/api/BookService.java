@@ -10,6 +10,8 @@ public interface BookService {
 
     BookResponse getById(int id);
 
+    BookResponse getByISBN(String ISBN);
+
     Page<BookResponse> get(Pageable pageable);
 
     void deleteById(int id);

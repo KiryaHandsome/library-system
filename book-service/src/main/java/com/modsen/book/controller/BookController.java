@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.net.URI;
 
@@ -38,6 +39,12 @@ public class BookController implements BookControllerOpenApi {
     @GetMapping
     public ResponseEntity<Page<BookResponse>> getBooks(Pageable pageable) {
         Page<BookResponse> response = bookService.get(pageable);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/by-isbn")
+    public ResponseEntity<BookResponse> getBookByISBN(@RequestParam(name = "isbn") String ISBN) {
+        BookResponse response = bookService.getByISBN(ISBN);
         return ResponseEntity.ok(response);
     }
 

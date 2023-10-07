@@ -33,6 +33,13 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    public BookResponse getByISBN(String ISBN) {
+        return bookRepository.findByISBN(ISBN)
+                .map(bookMapper::bookToResponse)
+                .orElseThrow(() -> new BookNotFoundException("Book not found. ISBN = " + ISBN));
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public Page<BookResponse> get(Pageable pageable) {
         return bookRepository.findAll(pageable)
