@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -42,7 +43,8 @@ public class BookController implements BookControllerOpenApi {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteBookById(@PathVariable Integer id) {
-        return null;
+        bookService.deleteById(id);
+        return ResponseEntity.ok("Book has deleted or isn't present in db.");
     }
 
     @PostMapping
@@ -53,8 +55,8 @@ public class BookController implements BookControllerOpenApi {
                 .body(response);
     }
 
-    @PatchMapping("/{id}")
-    public ResponseEntity<BookResponse> updateBook(@PathVariable Integer id, @RequestBody BookUpdate request) {
+    @PutMapping("/{id}")
+    public ResponseEntity<BookResponse> updateBook(@PathVariable Integer id, @Valid @RequestBody BookUpdate request) {
         BookResponse response = bookService.update(id, request);
         return ResponseEntity.ok(response);
     }

@@ -4,6 +4,7 @@ import com.modsen.book.dto.BookCreate;
 import com.modsen.book.dto.BookResponse;
 import com.modsen.book.dto.BookUpdate;
 import com.modsen.book.exception.BookNotFoundException;
+import com.modsen.book.exception.BookWithSuchISBNAlreadyExistsException;
 import com.modsen.book.mapper.BookMapper;
 import com.modsen.book.model.Book;
 import com.modsen.book.repository.BookRepository;
@@ -45,7 +46,12 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public BookResponse create(BookCreate request) {
-        // todo : check that ISBN is unique
+        bookRepository.findByISBN(request.ISBN())
+                .ifPresent(b -> {
+                    throw new BookWithSuchISBNAlreadyExistsException(
+                            "Book with such ISBN already exists, ISBN = " + request.ISBN()
+                    );
+                });
         Book book = bookMapper.createToBook(request);
         bookRepository.save(book);
         return bookMapper.bookToResponse(book);
