@@ -1,10 +1,26 @@
 services:
-  book-service-db:
+  book-db:
     image: postgres:15-alpine
     container_name: book-db
     restart: always
     environment:
+      - POSTGRES_DB=book
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
     ports:
       - 5432:5432
+
+  book-service:
+    build:
+      context: book-service
+      dockerfile: Dockerfile
+    container_name: book-service
+    restart: always
+    environment:
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://book-db:5432/postgres
+    depends_on:
+      - book-db
+    ports:
+      - 8080:8080

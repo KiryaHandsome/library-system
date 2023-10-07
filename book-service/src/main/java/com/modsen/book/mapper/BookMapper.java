@@ -8,16 +8,17 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValueMappingStrategy;
+import org.mapstruct.ReportingPolicy;
 
 @Mapper(
         componentModel = "spring",
-        nullValueMappingStrategy = NullValueMappingStrategy.RETURN_NULL
+        nullValueMappingStrategy = NullValueMappingStrategy.RETURN_NULL,
+        unmappedTargetPolicy = ReportingPolicy.IGNORE
 )
 public interface BookMapper {
 
     BookResponse bookToResponse(Book book);
 
-    @Mapping(target = "id", ignore = true)
     Book createToBook(BookCreate request);
 
     void updateBookFromDto(BookUpdate request, @MappingTarget Book book);
