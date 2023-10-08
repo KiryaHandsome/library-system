@@ -28,25 +28,38 @@ public interface AuthControllerOpenApi {
             responses = {
                     @ApiResponse(
                             responseCode = "200",
-                            description = "Returns access token",
+                            description = "Valid username and password. Returns access token",
                             content = @Content(
                                     mediaType = "application/json",
                                     schema = @Schema(implementation = BookResponse.class),
                                     examples = @ExampleObject("""
+                                            {
+                                                "accessToken": "eyJhbGciOiJIUzM4NCJ9.eyJpYXQiOjE2OTY4MDY5MTksImV4cCI6MTY5NjgwODcxOSwiaXNzIjoibW9kc2VuIiwic3ViIjoidXNlcm5hbWUifQ.i-h8-pCV3D2M4d6WNNY_av74vl3yoO6ULKs7gEw8GeehXQaEeDtjEY5no453DpQP"
+                                            }
                                             """)
                             )
                     ),
                     @ApiResponse(
-                            description = "Error when such ISBN already exists",
                             responseCode = "401",
+                            description = "Password or username not valid",
                             content = @Content(
                                     mediaType = "application/json",
                                     schema = @Schema(implementation = ErrorEntity.class),
-                                    examples = @ExampleObject("""
-                                                                                        
-                                            """)
+                                    examples = {
+                                            @ExampleObject("""
+                                                    {
+                                                        "message": "Provided password is not valid."
+                                                    }
+                                                    """),
+                                            @ExampleObject("""
+                                                    {
+                                                        "message": "user with such username not found. username = username2"
+                                                    }
+                                                    """)
+                                    }
                             )
                     )
+
             }
     )
     ResponseEntity<TokenResponse> login(LoginRequest request);
