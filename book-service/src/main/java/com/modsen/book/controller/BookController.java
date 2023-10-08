@@ -1,7 +1,9 @@
 package com.modsen.book.controller;
 
+import com.modsen.book.client.LibraryClient;
 import com.modsen.book.controller.openapi.BookControllerOpenApi;
 import com.modsen.book.dto.BookCreate;
+import com.modsen.book.dto.BookIdDto;
 import com.modsen.book.dto.BookResponse;
 import com.modsen.book.dto.BookUpdate;
 import com.modsen.book.service.api.BookService;
@@ -13,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -29,6 +30,7 @@ import java.net.URI;
 public class BookController implements BookControllerOpenApi {
 
     private final BookService bookService;
+    private final LibraryClient libraryClient;
 
     @GetMapping("/{id}")
     public ResponseEntity<BookResponse> getBookById(@PathVariable Integer id) {
@@ -59,6 +61,7 @@ public class BookController implements BookControllerOpenApi {
     @PostMapping
     public ResponseEntity<BookResponse> createBook(@Valid @RequestBody BookCreate request) {
         BookResponse response = bookService.create(request);
+        libraryClient.addBook(new BookIdDto(response.id()));
         return ResponseEntity
                 .created(URI.create("/api/v1/books/" + response.id()))
                 .body(response);
@@ -67,6 +70,13 @@ public class BookController implements BookControllerOpenApi {
     @PutMapping("/{id}")
     public ResponseEntity<BookResponse> updateBook(@PathVariable Integer id, @Valid @RequestBody BookUpdate request) {
         BookResponse response = bookService.update(id, request);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/available")
+    public ResponseEntity<Page<BookResponse>> getAvailableBooks(Pageable pageable) {
+        Page<BookIdDto> booksIdPage = libraryClient.getAvailableBooks(pageable).getBody();
+        Page<BookResponse> response = bookService.getBooksByIdList(booksIdPage);
         return ResponseEntity.ok(response);
     }
 }

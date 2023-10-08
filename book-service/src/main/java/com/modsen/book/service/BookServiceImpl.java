@@ -1,6 +1,7 @@
 package com.modsen.book.service;
 
 import com.modsen.book.dto.BookCreate;
+import com.modsen.book.dto.BookIdDto;
 import com.modsen.book.dto.BookResponse;
 import com.modsen.book.dto.BookUpdate;
 import com.modsen.book.exception.BookNotFoundException;
@@ -14,6 +15,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -53,12 +58,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public BookResponse create(BookCreate request) {
-        bookRepository.findByISBN(request.ISBN())
-                .ifPresent(b -> {
-                    throw new BookWithSuchISBNAlreadyExistsException(
-                            "Book with such ISBN already exists, ISBN = " + request.ISBN()
-                    );
-                });
+        ifBookWithSuchISBNExistsThrow(request.ISBN());
         Book book = bookMapper.createToBook(request);
         bookRepository.save(book);
         return bookMapper.bookToResponse(book);
@@ -68,8 +68,32 @@ public class BookServiceImpl implements BookService {
     public BookResponse update(int id, BookUpdate request) {
         Book book = bookRepository.findById(id)
                 .orElseThrow(() -> new BookNotFoundException("Book not found. id = " + id));
+        if (!book.getISBN().equals(request.ISBN())) {
+            ifBookWithSuchISBNExistsThrow(request.ISBN());
+        }
         bookMapper.updateBookFromDto(request, book);
         bookRepository.save(book);
         return bookMapper.bookToResponse(book);
+    }
+
+    @Override
+    public Page<BookResponse> getBooksByIdList(Page<BookIdDto> dtoPage) {
+        List<Integer> idList = dtoPage.get()
+                .map(BookIdDto::bookId)
+                .toList();
+        Map<Integer, BookResponse> booksByIdMap = bookRepository.findBooksByIdIn(idList)
+                .stream()
+                .map(bookMapper::bookToResponse)
+                .collect(Collectors.toMap(BookResponse::id, br -> br));
+        return dtoPage.map(dto -> booksByIdMap.get(dto.bookId()));
+    }
+
+    private void ifBookWithSuchISBNExistsThrow(String ISBN) {
+        bookRepository.findByISBN(ISBN)
+                .ifPresent(b -> {
+                    throw new BookWithSuchISBNAlreadyExistsException(
+                            "Book with such ISBN already exists, ISBN = " + ISBN
+                    );
+                });
     }
 }

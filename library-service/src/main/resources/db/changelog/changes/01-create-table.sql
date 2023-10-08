@@ -1,0 +1,7 @@
+CREATE TABLE book_loan
+(
+    id      INTEGER GENERATED ALWAYS AS IDENTITY,
+    book_id INTEGER                     NOT NULL,
+    took_at TIMESTAMP WITHOUT TIME ZONE NOT NULL,
+    due_to  TIMESTAMP WITHOUT TIME ZONE NOT NULL
+);

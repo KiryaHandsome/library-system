@@ -5,7 +5,6 @@ import com.modsen.book.dto.BookResponse;
 import com.modsen.book.dto.BookUpdate;
 import com.modsen.book.model.Book;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValueMappingStrategy;
 import org.mapstruct.ReportingPolicy;

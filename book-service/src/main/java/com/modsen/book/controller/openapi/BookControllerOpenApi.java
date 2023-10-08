@@ -14,7 +14,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestParam;
 
 public interface BookControllerOpenApi {
 
@@ -170,7 +169,7 @@ public interface BookControllerOpenApi {
                     )
             }
     )
-    ResponseEntity<BookResponse> getBookByISBN(@RequestParam String ISBN);
+    ResponseEntity<BookResponse> getBookByISBN(String ISBN);
 
     @Operation(
             method = "DELETE",
@@ -287,4 +286,7 @@ public interface BookControllerOpenApi {
             }
     )
     ResponseEntity<BookResponse> updateBook(Integer id, BookUpdate request);
+
+
+    ResponseEntity<Page<BookResponse>> getAvailableBooks(Pageable pageable);
 }
