@@ -1,4 +1,4 @@
-package com.modsen.util;
+package com.modsen.book.util;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
