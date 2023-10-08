@@ -33,9 +33,8 @@ public class LibraryServiceImpl implements LibraryService {
 
     @Override
     public Page<BookIdDto> getAvailableBooks(Pageable pageable) {
-        // todo: query only available books
         return bookLoanRepository
-                .findAll(pageable)
+                .findAvailableBooks(pageable)
                 .map(bookLoan -> new BookIdDto(bookLoan.getBookId()));
     }
 }

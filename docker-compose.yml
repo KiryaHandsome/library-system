@@ -26,6 +26,7 @@ services:
       - EXTERNAL_LIBRARY_URL=http://library-service:8081/api/v1/library
     depends_on:
       - book-db
+      - library-service
     ports:
       - 8080:8080
     networks:
