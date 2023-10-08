@@ -287,6 +287,95 @@ public interface BookControllerOpenApi {
     )
     ResponseEntity<BookResponse> updateBook(Integer id, BookUpdate request);
 
-
+    @Operation(
+            method = "GET",
+            tags = "Library",
+            description = "Get available books with pagination",
+            parameters = {
+                    @Parameter(name = "page", description = "Page number", example = "0"),
+                    @Parameter(name = "size", description = "page size", example = "10"),
+                    @Parameter(name = "sort", description = "Sorting by field", example = "id")
+            },
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = Pageable.class),
+                                    examples = @ExampleObject("""
+                                            {
+                                                "content": [
+                                                    {
+                                                        "id": 1,
+                                                        "ISBN": "9780451524935",
+                                                        "name": "1984",
+                                                        "genre": "Fiction",
+                                                        "description": "A dystopian novel by George Orwell",
+                                                        "author": "George Orwell"
+                                                    },
+                                                    {
+                                                        "id": 2,
+                                                        "ISBN": "9780441013593",
+                                                        "name": "Dune",
+                                                        "genre": "Science Fiction",
+                                                        "description": "A science fiction novel by Frank Herbert",
+                                                        "author": "Frank Herbert"
+                                                    },
+                                                    {
+                                                        "id": 3,
+                                                        "ISBN": "9780316969683",
+                                                        "name": "The Da Vinci Code",
+                                                        "genre": "Mystery",
+                                                        "description": "A mystery thriller by Dan Brown",
+                                                        "author": "Dan Brown"
+                                                    },
+                                                    {
+                                                        "id": 4,
+                                                        "ISBN": "9780062315007",
+                                                        "name": "Sapiens: A Brief History of Humankind",
+                                                        "genre": "Non-Fiction",
+                                                        "description": "A history book by Yuval Noah Harari",
+                                                        "author": "Yuval Noah Harari"
+                                                    },
+                                                    {
+                                                        "id": 5,
+                                                        "ISBN": "9780743216308",
+                                                        "name": "Steve Jobs",
+                                                        "genre": "Biography",
+                                                        "description": "A biography of Steve Jobs by Walter Isaacson",
+                                                        "author": "Walter Isaacson"
+                                                    },
+                                                    {
+                                                        "id": 6,
+                                                        "ISBN": "9780545010221",
+                                                        "name": "Harry Potter and the Sorcerer's Stone",
+                                                        "genre": "Fantasy",
+                                                        "description": "A fantasy novel by J.K. Rowling",
+                                                        "author": "J.K. Rowling"
+                                                    }
+                                                ],
+                                                "pageable": {
+                                                    "pageNumber": 0,
+                                                    "pageSize": 20,
+                                                    "sort": [],
+                                                    "offset": 0,
+                                                    "paged": true,
+                                                    "unpaged": false
+                                                },
+                                                "totalPages": 1,
+                                                "totalElements": 6,
+                                                "last": true,
+                                                "size": 20,
+                                                "number": 0,
+                                                "sort": [],
+                                                "numberOfElements": 6,
+                                                "first": true,
+                                                "empty": false
+                                            }
+                                            """)
+                            )
+                    )
+            }
+    )
     ResponseEntity<Page<BookResponse>> getAvailableBooks(Pageable pageable);
 }
