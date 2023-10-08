@@ -7,4 +7,6 @@ public record BookResponse(
         String genre,
         String description,
         String author
-) {}
+) {
+
+}

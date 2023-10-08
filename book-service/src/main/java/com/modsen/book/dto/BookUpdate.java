@@ -21,4 +21,5 @@ public record BookUpdate(
         @Size(min = 2, max = 100)
         String author
 ) {
+
 }

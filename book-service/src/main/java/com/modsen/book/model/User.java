@@ -13,15 +13,12 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "book")
-public class Book {
+@Table(name = "`user`")
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String ISBN;
-    private String name;
-    private String genre;
-    private String description;
-    private String author;
+    private String username;
+    private String password;
 }

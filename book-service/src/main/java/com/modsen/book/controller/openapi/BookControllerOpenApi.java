@@ -136,7 +136,7 @@ public interface BookControllerOpenApi {
             method = "GET",
             tags = "Book",
             description = "Get book by ISBN",
-            parameters = @Parameter(name="isbn", description = "ISBN identification", example = "9780451524935"),
+            parameters = @Parameter(name = "isbn", description = "ISBN identification", example = "9780451524935"),
             responses = {
                     @ApiResponse(
                             responseCode = "200",
