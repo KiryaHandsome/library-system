@@ -1,0 +1,44 @@
+[
+  {
+    "ISBN": "9780451524935",
+    "name": "1984",
+    "genre": "Fiction",
+    "description": "A dystopian novel by George Orwell",
+    "author": "George Orwell"
+  },
+  {
+    "ISBN": "9780441013593",
+    "name": "Dune",
+    "genre": "Science Fiction",
+    "description": "A science fiction novel by Frank Herbert",
+    "author": "Frank Herbert"
+  },
+  {
+    "ISBN": "9780316969683",
+    "name": "The Da Vinci Code",
+    "genre": "Mystery",
+    "description": "A mystery thriller by Dan Brown",
+    "author": "Dan Brown"
+  },
+  {
+    "ISBN": "9780062315007",
+    "name": "Sapiens: A Brief History of Humankind",
+    "genre": "Non-Fiction",
+    "description": "A history book by Yuval Noah Harari",
+    "author": "Yuval Noah Harari"
+  },
+  {
+    "ISBN": "9780743216308",
+    "name": "Steve Jobs",
+    "genre": "Biography",
+    "description": "A biography of Steve Jobs by Walter Isaacson",
+    "author": "Walter Isaacson"
+  },
+  {
+    "ISBN": "9780545010221",
+    "name": "Harry Potter and the Sorcerer's Stone",
+    "genre": "Fantasy",
+    "description": "A fantasy novel by J.K. Rowling",
+    "author": "J.K. Rowling"
+  }
+]

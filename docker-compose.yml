@@ -22,6 +22,7 @@ services:
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=postgres
       - SPRING_DATASOURCE_URL=jdbc:postgresql://book-db:5432/book
+      - BOOK_URL=http://book-service:8080/api/v1/books
       - EXTERNAL_LIBRARY_URL=http://library-service:8081/api/v1/library
     depends_on:
       - book-db
