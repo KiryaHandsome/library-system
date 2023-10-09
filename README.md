@@ -45,6 +45,8 @@ The following technologies and frameworks have been utilized in this project:
 
 ## How to Run the Project
 
+Prerequisits
+
 1. Clone the repository
    ```shell
    git clone git@github.com:KiryaHandsome/library-system.git
@@ -65,3 +67,6 @@ The following technologies and frameworks have been utilized in this project:
    }
    ```
 
+## Postman
+
+You can also import [postman collection](postman/library-system-api.collection.json) and use prepared requests.
